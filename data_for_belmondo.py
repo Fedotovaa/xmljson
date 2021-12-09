@@ -1,3 +1,4 @@
+from itertools import groupby
 from urllib.request import urlopen
 from json import loads
 import datetime
@@ -8,7 +9,9 @@ revisions = data['query']['pages']['192203']['revisions']
 max = 0
 
 for date, count in groupby(revisions, lambda date: datetime.datetime.strptime(date['timestamp'], '%Y-%m-%dT%H:%M:%SZ').date()):
-    if len(list(count)) > max:
+    i = len(list(count))
+    if i > max:
         maxDate = date
-        max = len(list(count))
+        max = i
+
 print(maxDate)
